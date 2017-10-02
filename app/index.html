@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>opencv4nodejs electron example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  </head>
+  <body>
+    <header class="centered-text">
+      <h3>opencv4nodejs electron example</h3>
+    </header>
+    <main>
+      <section>
+        <div class="centered-container">
+          <label class="margin-right">
+            Pick a .png or .jpg file:
+          </span>
+          <input
+            type="file"
+            onchange="onImageSelected(event)"
+          />
+        </div>
+      </section>
+      <section class="centered-container">
+
+          <div style="max-width: 550px">
+            <canvas id="input"></canvas>
+            <canvas id="mask"></canvas>
+          </div>
+
+          <section>
+            <div class="centered-container">
+              <button
+                id="bgr-btn"
+                class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                onclick="bgr()"
+              >
+                BGR
+              </button>
+              <button
+                id="hsv-btn"
+                class="mdl-button mdl-js-button mdl-button--raised"
+                onclick="hsv()"
+              >
+                HSV
+              </button>
+              <button
+                id="lab-btn"
+                class="mdl-button mdl-js-button mdl-button--raised"
+                onclick="lab()"
+              >
+                Lab
+              </button>
+              <button
+                id="gray-btn"
+                class="mdl-button mdl-js-button mdl-button--raised"
+                onclick="gray()"
+              >
+                GRAY
+              </button>
+            </div>
+
+            <!-- channel 0 slider -->
+            <div class="slider-group">
+              <label id="c0-label"> B </label>
+              <div>
+                <div class="slider">
+                  <input
+                    id="c0lower" class="mdl-slider mdl-js-slider" type="range"
+                    min="0" max="255" value="0" oninput="onRangeChanged(event)"
+                  >
+                  <span id="c0lower-value"> 0 </span>
+                </div>
+                <div class="slider">
+                  <input
+                    id="c0upper" class="mdl-slider mdl-js-slider" type="range"
+                    min="0" max="255" value="255" oninput="onRangeChanged(event)"
+                  >
+                  <span id="c0upper-value"> 255 </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- channel 1 slider -->
+            <div id="slider-group-c1" class="slider-group">
+              <label id="c1-label"> G </label>
+              <div>
+                <div class="slider">
+                  <input
+                    id="c1lower" class="mdl-slider mdl-js-slider" type="range"
+                    min="0" max="255" value="0" oninput="onRangeChanged(event)"
+                  >
+                  <span id="c1lower-value"> 0 </span>
+                </div>
+                <div class="slider">
+                  <input
+                    id="c1upper" class="mdl-slider mdl-js-slider" type="range"
+                    min="0" max="255" value="255" oninput="onRangeChanged(event)"
+                  >
+                  <span id="c1upper-value"> 255 </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- channel 2 slider -->
+            <div id="slider-group-c2" class="slider-group">
+              <label id="c2-label"> R </label>
+              <div>
+                <div class="slider">
+                  <input
+                    id="c2lower" class="mdl-slider mdl-js-slider" type="range"
+                    min="0" max="255" value="0" oninput="onRangeChanged(event)"
+                  >
+                  <span id="c2lower-value"> 0 </span>
+                </div>
+                <div class="slider">
+                  <input
+                    id="c2upper" class="mdl-slider mdl-js-slider" type="range"
+                    min="0" max="255" value="255" oninput="onRangeChanged(event)"
+                  >
+                  <span id="c2upper-value"> 255 </span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+      </section>
+    </main>
+
+    <<script src="./image-helpers.js"></script>
+    <script>
+      var cv = require('electron').remote.require('opencv4nodejs');
+      var path = require('path');
+      var fs = require('fs');
+      var selectedImgBGR = cv.imread(path.resolve('assets', 'got.jpg')).resizeToMax(500);
+      var selectedImg = selectedImgBGR;
+
+      var currentFilter = {
+        c0lower: 0,
+        c0upper: 255,
+        c1lower: 0,
+        c1upper: 255,
+        c2lower: 0,
+        c2upper: 255
+      };
+
+      renderImage(selectedImgBGR, document.getElementById('input'));
+
+      function resetSlidersAndRanges(colorSpace) {
+        currentFilter = {
+          c0lower: 0,
+          c0upper: colorSpace === 'hsv' ? 180 : 255,
+          c1lower: 0,
+          c1upper: 255,
+          c2lower: 0,
+          c2upper: 255
+        };
+
+        if (colorSpace === 'gray') {
+          document.getElementById('slider-group-c1').style.display = 'none';
+          document.getElementById('slider-group-c2').style.display = 'none';
+          document.getElementById('c0lower').style.display = 0;
+          document.getElementById('c0upper').style.display = 255;
+        } else {
+          document.getElementById('slider-group-c1').style.display = 'flex';
+          document.getElementById('slider-group-c2').style.display = 'flex';
+        }
+
+        Object.keys(currentFilter).forEach(function(sliderId) {
+          var val = currentFilter[sliderId];
+          var slider = document.getElementById(sliderId);
+          slider.max = colorSpace === 'hsv' && sliderId === 'c0upper'  ? 180 : 255;
+          slider.value = val;
+          slider.MaterialSlider.change();console.log(sliderId + '_value')
+          document.getElementById(sliderId + '-value').innerHTML = val;
+        });
+
+        ['bgr', 'hsv', 'lab', 'gray'].forEach((cSpace) => {
+          var colorClazz = 'mdl-button--colored';
+          var btn = document.getElementById(cSpace + '-btn');
+          if (cSpace === colorSpace) {
+            btn.classList.add(colorClazz);
+          } else {
+            btn.classList.remove(colorClazz);
+          }
+        });
+      }
+
+      function bgr() {
+        selectedImg = selectedImgBGR;
+        document.getElementById('c0-label').innerHTML = 'B';
+        document.getElementById('c1-label').innerHTML = 'G';
+        document.getElementById('c2-label').innerHTML = 'R';
+        resetSlidersAndRanges('bgr');
+        renderImage(selectedImgBGR, document.getElementById('input'));
+        renderRangeMask();
+      }
+
+      function hsv() {
+        selectedImg = selectedImgBGR.cvtColor(cv.COLOR_BGR2HSV);
+        document.getElementById('c0-label').innerHTML = 'H';
+        document.getElementById('c1-label').innerHTML = 'S';
+        document.getElementById('c2-label').innerHTML = 'V';
+        resetSlidersAndRanges('hsv');
+        renderImage(selectedImgBGR, document.getElementById('input'));
+        renderRangeMask();
+      }
+
+      function lab() {
+        selectedImg = selectedImgBGR.cvtColor(cv.COLOR_BGR2Lab);
+        document.getElementById('c0-label').innerHTML = 'L';
+        document.getElementById('c1-label').innerHTML = 'a';
+        document.getElementById('c2-label').innerHTML = 'b';
+        resetSlidersAndRanges('lab');
+        renderImage(selectedImgBGR, document.getElementById('input'));
+        renderRangeMask();
+      }
+
+      function gray() {
+        selectedImg = selectedImgBGR.bgrToGray();
+        resetSlidersAndRanges('gray');
+        document.getElementById('c0-label').innerHTML = 'G';
+        renderImage(selectedImg, document.getElementById('input'));
+        renderRangeMask();
+      }
+
+      function onRangeChanged(e) {
+        var val = parseInt(e.target.value);
+        var id = e.target.id;
+
+        if (id.includes('lower')) {
+          val = Math.min(val, currentFilter[id.replace('lower', 'upper')]);
+          e.target.value = val;
+        } else {
+          val = Math.max(val, currentFilter[id.replace('upper', 'lower')]);
+          e.target.value = val;
+        }
+        currentFilter[id] = val;
+
+        document.getElementById(e.target.id + '-value').innerHTML = val;
+        renderRangeMask();
+      }
+
+      function renderRangeMask() {
+        var inRange;
+        if (selectedImg.channels === 1) {
+          inRange = selectedImg.threshold(
+            currentFilter.c0lower,
+            255,
+            cv.THRESH_BINARY
+          )
+          .and(
+            selectedImg.threshold(
+              currentFilter.c0upper,
+              255,
+              cv.THRESH_BINARY_INV
+            )
+          );
+        } else {
+          inRange = selectedImg.inRange(
+            new cv.Vec(currentFilter.c0lower, currentFilter.c1lower, currentFilter.c2lower),
+            new cv.Vec(currentFilter.c0upper, currentFilter.c1upper, currentFilter.c2upper)
+          );
+        }
+        renderImage(
+          inRange,
+          document.getElementById('mask')
+        );
+      }
+
+      function onImageSelected(e) {
+        selectedFile = e.target.files[0];
+
+        var reader = new FileReader();
+        reader.onload = function(re) {
+          selectedImgBGR = decodeImageFromBase64(re.target.result).resizeToMax(500);
+          selectedImg = selectedImgBGR;
+          renderImage(
+            selectedImg,
+            document.getElementById('input')
+          );
+          renderRangeMask();
+        };
+        reader.readAsDataURL(selectedFile);
+      }
+
+    </script>
+  </body>
+</html>

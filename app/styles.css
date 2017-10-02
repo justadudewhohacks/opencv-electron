@@ -1,0 +1,39 @@
+html {
+  background: #fafafa;
+}
+
+button, canvas, img {
+  margin: 5px !important;
+}
+
+.centered-container {
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.centered-text {
+  text-align: center;
+}
+
+.margin-right {
+  margin-right: 5px;
+}
+
+.slider {
+  display: flex;
+}
+
+.slider > div {
+  width: 400px;
+}
+
+.slider-group {
+  align-items: center;
+  display: flex;
+}
+
+.slider-group > label {
+  font-size: 18px;
+  font-weight: bold;
+}

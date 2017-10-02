@@ -1,0 +1,16 @@
+{
+  "name": "opencv-electron",
+  "version": "1.0.0",
+  "description": "",
+  "author": "justadudewhohacks",
+  "license": "ISC",
+  "scripts": {
+    "install": "electron-rebuild -w opencv4nodejs",
+    "start": "electron main.js"
+  },
+  "dependencies": {
+    "electron": "^1.7.8",
+    "electron-rebuild": "^1.6.0",
+    "opencv4nodejs": "^2.1.1"
+  }
+}
