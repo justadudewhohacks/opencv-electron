@@ -14,10 +14,7 @@ const createWindow = () => {
   });
 
   win.setResizable(true);
-  win.loadURL(url.format({
-    pathname: path.resolve('./app/index.html'),
-    slashes: true
-  }));
+  win.loadURL('file://' + __dirname + '/app/index.html');
 
   win.on('closed', () => {
     win = null;
