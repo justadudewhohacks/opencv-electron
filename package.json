@@ -1,9 +1,16 @@
 {
   "name": "opencv-electron",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.0",
+  "description": "Example for using opencv4nodejs with electron.",
+  "keywords": [
+    "opencv",
+    "cv",
+    "electron",
+    "image",
+    "filter"
+  ],
   "author": "justadudewhohacks",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {
     "install": "electron-rebuild -w opencv4nodejs",
     "start": "electron main.js"
@@ -11,6 +18,6 @@
   "dependencies": {
     "electron": "^1.7.8",
     "electron-rebuild": "^1.6.0",
-    "opencv4nodejs": "^2.1.1"
+    "opencv4nodejs": "^2.2.0"
   }
 }
