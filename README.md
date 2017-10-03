@@ -11,5 +11,5 @@ npm install
 
 ### Run:
 ``` bash
-docker-compose up
+npm start
 ```

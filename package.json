@@ -11,6 +11,14 @@
   ],
   "author": "justadudewhohacks",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justadudewhohacks/opencv-electron"
+  },
+  "bugs": {
+    "url": "https://github.com/justadudewhohacks/opencv-electron/issues"
+  },
+  "homepage": "https://github.com/justadudewhohacks/opencv-electron#readme",
   "scripts": {
     "install": "electron-rebuild -w opencv4nodejs",
     "start": "electron main.js"
