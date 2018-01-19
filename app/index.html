@@ -132,7 +132,7 @@
 
     <<script src="./image-helpers.js"></script>
     <script>
-      var cv = require('electron').remote.require('opencv4nodejs');
+      var cv = require('opencv4nodejs');
       var path = require('path');
       var fs = require('fs');
       var selectedImgBGR = cv.imread(path.resolve('assets', 'got.jpg')).resizeToMax(500);
@@ -174,7 +174,7 @@
           var slider = document.getElementById(sliderId);
           slider.max = colorSpace === 'hsv' && sliderId === 'c0upper'  ? 180 : 255;
           slider.value = val;
-          slider.MaterialSlider.change();console.log(sliderId + '_value')
+          slider.MaterialSlider.change();
           document.getElementById(sliderId + '-value').innerHTML = val;
         });
 

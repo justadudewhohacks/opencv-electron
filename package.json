@@ -21,11 +21,12 @@
   "homepage": "https://github.com/justadudewhohacks/opencv-electron#readme",
   "scripts": {
     "install": "electron-rebuild -w opencv4nodejs",
+    "electron-rebuild": "electron-rebuild -w opencv4nodejs",
     "start": "electron main.js"
   },
   "dependencies": {
     "electron": "^1.7.8",
     "electron-rebuild": "^1.6.0",
-    "opencv4nodejs": "^2.2.0"
+    "opencv4nodejs": "^2.37.1"
   }
 }
