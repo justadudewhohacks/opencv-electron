@@ -1,0 +1,32 @@
+{
+  "name": "@opencv-electron/plain-js",
+  "version": "0.0.0",
+  "description": "Example for using opencv4nodejs with electron.",
+  "keywords": [
+    "opencv",
+    "cv",
+    "electron",
+    "image",
+    "filter"
+  ],
+  "author": "justadudewhohacks",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justadudewhohacks/opencv-electron"
+  },
+  "bugs": {
+    "url": "https://github.com/justadudewhohacks/opencv-electron/issues"
+  },
+  "homepage": "https://github.com/justadudewhohacks/opencv-electron#readme",
+  "scripts": {
+    "electron-rebuild": "electron-rebuild -w opencv4nodejs",
+    "install": "npm run electron-rebuild",
+    "start": "electron main.js"
+  },
+  "dependencies": {
+    "electron": "^1.8.4",
+    "electron-rebuild": "^1.7.3",
+    "opencv4nodejs": "^3.5.0"
+  }
+}

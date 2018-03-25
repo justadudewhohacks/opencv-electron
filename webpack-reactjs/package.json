@@ -1,5 +1,5 @@
 {
-  "name": "opencv-electron",
+  "name": "@opencv-electron/webpack-reactjs",
   "version": "0.0.0",
   "description": "Example for using opencv4nodejs with electron.",
   "keywords": [
@@ -20,13 +20,25 @@
   },
   "homepage": "https://github.com/justadudewhohacks/opencv-electron#readme",
   "scripts": {
-    "install": "electron-rebuild -w opencv4nodejs",
     "electron-rebuild": "electron-rebuild -w opencv4nodejs",
-    "start": "electron main.js"
+    "install": "npm run electron-rebuild",
+    "start": "electron main.js",
+    "dev": "webpack-dev-server"
   },
   "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
     "electron": "^1.8.4",
     "electron-rebuild": "^1.7.3",
-    "opencv4nodejs": "^3.5.0"
+    "node-loader": "^0.6.0",
+    "opencv4nodejs": "^3.5.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-hot-loader": "^3.1.3",
+    "webpack": "^3.11.0",
+    "webpack-dev-server": "^2.11.1"
   }
 }
