@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": false,
+    "noFallthroughCasesInSwitch": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "target": "es6",
+    "outDir": "dist",
+    "baseUrl": ".",
+    "importHelpers": true,
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "typings",
+      "node_modules/@types"
+    ],
+    "lib": [
+      "dom",
+      "es6",
+      "es2015.promise",
+      "es2015.generator",
+      "es2015.core"
+    ],
+    "jsx": "react"
+  },
+  "formatCodeOptions": {
+    "indentSize": 2,
+    "tabSize": 2
+  },
+  "include": [
+    "app"
+  ]
+}

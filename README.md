@@ -25,27 +25,42 @@ npm start
 ```
 
 # webpack-reactjs
-This example shows how to use opencv4nodejs with webpack and react.
-
-The example uses node-loader to load the native addon. To get around resolving the absolute path to the .node file, the path to opencv4nodejs.node is globally defined in the webpack.config:
+This example shows how to use opencv4nodejs with webpack and react, requires node-loader to load the native addon.
+``` bash
+npm i node-loader
 ```
-// hack to resolve absolute path to the opencv4nodejs.node file
-opencv4nodejs: JSON.stringify(path.resolve(__dirname, 'node_modules/opencv4nodejs/build/Release/opencv4nodejs.node'))
+
+## On windows
+If you are using the autobuild on windows, you have to append the path to the binaries
+to the path env of main process manually as follows (in main.js):
+```
+if (process.platform === 'win32' && !process.env.OPENCV4NODEJS_DISABLE_AUTOBUILD) {
+  process.env.path += ';' + require('../renderer/node_modules/opencv-build').opencvBinDir
+}
 ```
 
 ## Running this example:
 
-### Install
+In the root directory:
 ``` bash
 npm install
-```
-
-### Run the dev server:
-``` bash
-npm run dev
-```
-
-### Run the electron app:
-``` bash
 npm start
+```
+
+In another terminal cd into ./renderer and run the dev server:
+``` bash
+npm install
+npm start
+```
+
+# Known issues
+
+If you are receiving the following error on windows during electron-rebuild:
+``` bash
+AttributeError: 'MSVSProject' object has no attribute 'iteritems'
+```
+
+Delete fsevents from your node_modules folder and rerun:
+```
+npm run electron-rebuild
 ```

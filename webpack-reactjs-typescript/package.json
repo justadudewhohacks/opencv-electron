@@ -1,5 +1,5 @@
 {
-  "name": "@opencv-electron/plain-js",
+  "name": "@opencv-electron/webpack-reactjs-typescript",
   "version": "0.0.0",
   "description": "Example for using opencv4nodejs with electron.",
   "keywords": [
@@ -20,13 +20,14 @@
   },
   "homepage": "https://github.com/justadudewhohacks/opencv-electron#readme",
   "scripts": {
-    "electron-rebuild": "electron-rebuild -w opencv4nodejs",
-    "install": "npm run electron-rebuild",
-    "start": "electron main.js"
+    "build": "tsc",
+    "start": "npm run build && electron ./dist/main.js"
   },
   "dependencies": {
-    "electron": "^1.8.4",
-    "electron-rebuild": "^1.7.3",
-    "opencv4nodejs": "^4.2.1"
+    "@types/electron": "^1.6.10",
+    "@types/node": "^9.4.1",
+    "electron": "^1.8.3",
+    "tslib": "^1.9.0",
+    "typescript": "^2.7.2"
   }
 }

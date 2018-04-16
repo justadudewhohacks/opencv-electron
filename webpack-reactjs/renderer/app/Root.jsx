@@ -1,10 +1,7 @@
 import * as React from 'react'
 
-// require opencv4nodejs from the path defined globally in the webpack.config
-const cv = require(opencv4nodejs);
-
+const cv = require('opencv4nodejs');
 const path = require('path');
-const fs = require('fs');
 
 export default class Root extends React.Component{
   renderImage(img) {

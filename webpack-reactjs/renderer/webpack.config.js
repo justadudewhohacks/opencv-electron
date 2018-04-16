@@ -23,9 +23,7 @@ module.exports = {
       {
         'process.env': {
           NODE_ENV: JSON.stringify('development')
-        },
-        // hack to resolve absolute path to the opencv4nodejs.node file
-        opencv4nodejs: JSON.stringify(path.resolve(__dirname, 'node_modules/opencv4nodejs/build/Release/opencv4nodejs.node'))
+        }
       }
     ),
     new webpack.HotModuleReplacementPlugin()
